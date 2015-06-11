@@ -1,6 +1,33 @@
 ViewPagerIndicator
 ==================
-Download sample [Apk](https://github.com/LuckyJayce/ViewPagerIndicator/blob/master/raw/ViewPagerIndicator_Demo.apk?raw=true)  
+
+# fork说明
+
+>此项目fork自 https://github.com/LuckyJayce/ViewPagerIndicator
+
+首先说一下我fork这个库的目的。
+因为Intellij Idea/Android Studio逐渐流行起来。
+全新的gradle构建系统，除了运行的时候有点慢和需要一定学习成本外，优点简直太耀眼。
+而作为IDE，IDEA/AS本来就很棒（虽然比较占资源），里面更是各种神插件，极大提高开发效率。
+于是我建议公司项目早点迁移到AS。
+然而我同事说，**不行！**
+至于原因，就是他**用了这个开源组件！**
+但是原项目使用修改了support v4包中的ViewPager！！！
+也就是只要使用了这个库，就代表如果项目中引用的其他库也使用了v4包，就要将所有这些其他项目引用的v4包改为这个动过手脚的。这样太麻烦了，否则会出现冲突。那就断了使用AS的后路了。
+
+好吧，既然只是改了ViewPager，其他没改的话，我就单独把这个ViewPager拿出来好了，免得为了一棵树放弃整个森林，哦不，整个世界。
+
+具体修改细节如图：
+![提取ViewPager](http://i4.tietuku.com/7c2f151c62c8b55c.png)
+
+基本上就是把改好的ViewPager拿出来，放到新建的`com.shizhefei.view.modified`包中，
+然后把原项目中对`android.support.v4.view.ViewPager`的引用，改成`com.shizhefei.view.modified.ViewPager`，搞定。
+
+还有顺便把原项目迁移到AS上面了，直接导入编译即可。
+于是bye bye，自定义v4包。AS我来了。
+
+下面是原项目README
+-------------------------------------
 
 ###1. 支持自定义tab样式  
 ###2. 支持自定义滑动块样式和位置  
@@ -15,7 +42,7 @@ Download sample [Apk](https://github.com/LuckyJayce/ViewPagerIndicator/blob/mast
     
     import android.os.Bundle;
     import android.support.v4.app.FragmentActivity;
-    import android.support.v4.view.ViewPager;
+    import com.shizhefei.view.modified.ViewPager;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
@@ -93,10 +120,10 @@ Download sample [Apk](https://github.com/LuckyJayce/ViewPagerIndicator/blob/mast
 ![image](https://github.com/LuckyJayce/ViewPagerIndicator/blob/master/raw/3.png)
 ![image](https://github.com/LuckyJayce/ViewPagerIndicator/blob/master/raw/4.png)
 # 主要的类 #
-## 1.ViewPager ##
-android-support-v4 里面的viewpager被重新改写了。    
+## ~~1.ViewPager ##~~
+~~android-support-v4 里面的viewpager被重新改写了。    
 **1.在原先的基础上添加了setCanScroll(false)的方法用来禁止滑动。 
-2.setPrepareNumber(1)的方法用来配合setOffscreenPageLimit(1)进行预加载界面和防止重新创建界面**
+2.setPrepareNumber(1)的方法用来配合setOffscreenPageLimit(1)进行预加载界面和防止重新创建界面**~~
 
 ## 2.Indicator ##
 顾名思义是指示器的意思。有点像水平方向的listview 可以自定义item。
